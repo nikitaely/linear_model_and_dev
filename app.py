@@ -10,49 +10,38 @@ st.title('Разведочный анализ данных')
 st.text('Конечный датафрейм')
 st.dataframe(df.head())
 
-
-
 fig, ax = plt.subplots()
-
 st.text('Распределение личного дохода')
 plt.boxplot(df['PERSONAL_INCOME'])
-
-fig
+st.pyplot(fig)
 
 fig, ax = plt.subplots()
-
 st.text('Распределение возраста')
 plt.boxplot(df['AGE'])
-
-fig
-
-
+st.pyplot(fig)
 
 fig, ax = plt.subplots(figsize=(16, 8))
-
 sns.heatmap(df.corr(), annot=True)
-
-plt.show()
 st.text('Матрица корреляций')
+st.pyplot(fig)
 
-fig
 
-
-fig, ax = plt.subplots(figsize=(16, 8))
-
+fig, ax = plt.subplots()
 plt.bar(df['TARGET'], df['PERSONAL_INCOME'])
-
-plt.show()
 st.text('Зависимость целевой переменной от личного дохода')
+st.pyplot(fig)
 
-fig
-
-
-fig, ax = plt.subplots(figsize=(16, 8))
-
+fig, ax = plt.subplots()
 plt.bar(df['TARGET'], df['AGE'])
-
-plt.show()
 st.text('Зависимость целевой переменной от возраста')
+st.pyplot(fig)
 
-fig
+numbers = ['AGE', 'CHILD_TOTAL', 'DEPENDANTS', 'PERSONAL_INCOME', 'LOAN_NUM_TOTAL', 'LOAN_NUM_CLOSED']
+categorical = ['GENDER', 'DEPENDANTS', 'SOCSTATUS_WORK_FL', 'SOCSTATUS_PENS_FL']
+
+st.text('Характеристики числовых столбцов')
+st.dataframe(df[numbers].describe())
+
+st.text('Характеристики категориальных столбцов')
+st.dataframe(df[categorical].astype('category').describe())
+

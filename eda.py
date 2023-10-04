@@ -336,16 +336,27 @@ plt.bar(df['TARGET'], df['AGE'])
 plt.show()
 
 
-# In[ ]:
+# In[52]:
 
 
+numbers = ['AGE', 'CHILD_TOTAL', 'DEPENDANTS', 'PERSONAL_INCOME', 'LOAN_NUM_TOTAL', 'LOAN_NUM_CLOSED']
+categorical = ['GENDER', 'DEPENDANTS', 'SOCSTATUS_WORK_FL', 'SOCSTATUS_PENS_FL']
 
 
+# Характеристики числовых столбцов
 
-# In[ ]:
+# In[54]:
 
 
+df[numbers].describe()
 
+
+# Характеристики категориальных столбцов
+
+# In[58]:
+
+
+df[categorical].astype('category').describe()
 
 
 # In[ ]:
