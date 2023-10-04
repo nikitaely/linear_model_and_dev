@@ -3,7 +3,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-df = pd.read_csv(r'C:\Users\nikel\OneDrive\Рабочий стол\data\df.csv')
+df = pd.read_csv('https://github.com/nikitaely/linear_model_and_dev/blob/main/df.csv', on_bad_lines='skip')
 
 st.title('Разведочный анализ данных')
 
