@@ -114,18 +114,18 @@
 # 
 # Соберите всю информацию о клиентах в одну таблицу, где одна строчка соответствует полной информации об одном клиенте.
 
-# In[2]:
+# In[1]:
 
 
 import pandas as pd
 
 
-# In[3]:
+# In[23]:
 
 
-PATH = r'C:\Users\nikel\OneDrive\Рабочий стол\data\\'
+PATH = 'https://raw.githubusercontent.com/aiedu-courses/stepik_linear_models/a426c3cb41b771fa0e555efdc0723885bd2d6dd9/datasets/'
 
-D_clients = pd.read_csv(PATH + 'D_clients.csv', sep=',')
+D_clients = pd.read_csv(PATH + 'D_clients.csv')
 D_job = pd.read_csv(PATH + 'D_job.csv')
 D_salary = pd.read_csv(PATH + 'D_salary.csv')
 D_last_credit = pd.read_csv(PATH + 'D_last_credit.csv')
@@ -134,7 +134,13 @@ D_close_loan = pd.read_csv(PATH + 'D_close_loan.csv')
 D_target = pd.read_csv(PATH + 'D_target.csv')
 
 
-# In[4]:
+# In[24]:
+
+
+D_clients
+
+
+# In[25]:
 
 
 D_clients.describe()
@@ -146,31 +152,31 @@ D_clients.describe()
 
 
 
-# In[5]:
+# In[26]:
 
 
 D_job.describe()
 
 
-# In[6]:
+# In[27]:
 
 
 D_salary.describe()
 
 
-# In[7]:
+# In[28]:
 
 
 D_last_credit.describe()
 
 
-# In[8]:
+# In[29]:
 
 
 D_close_loan.describe()
 
 
-# In[9]:
+# In[30]:
 
 
 D_target.describe()
@@ -180,7 +186,7 @@ D_target.describe()
 
 # Удалим явные дубликаты из таблиц
 
-# In[10]:
+# In[31]:
 
 
 D_clients = D_clients.drop_duplicates()
@@ -192,27 +198,21 @@ D_target = D_target.drop_duplicates()
 D_loan = D_loan.drop_duplicates()
 
 
-# In[11]:
+# In[32]:
 
 
 D_target
 
 
-# In[12]:
+# In[35]:
 
 
-df
-
-
-# In[ ]:
-
-
-
+df.head()
 
 
 # Объединим таблицы в одну
 
-# In[13]:
+# In[36]:
 
 
 df = D_clients.merge(D_job, left_on='ID', right_on='ID_CLIENT', how='left')
@@ -233,7 +233,7 @@ df = df.merge(D_loan_group, left_on='ID', right_on='ID_CLIENT', how='left')
 
 # Удалим ненужные столбцы
 
-# In[14]:
+# In[37]:
 
 
 df = df.drop(['REG_ADDRESS_PROVINCE', 'FACT_ADDRESS_PROVINCE', 'POSTAL_ADDRESS_PROVINCE', 'FL_PRESENCE_FL',
@@ -241,13 +241,13 @@ df = df.drop(['REG_ADDRESS_PROVINCE', 'FACT_ADDRESS_PROVINCE', 'POSTAL_ADDRESS_P
         'CREDIT', 'TERM', 'FST_PAYMENT', 'ID_CLIENT_x', 'ID_LOAN_y', 'EDUCATION', 'MARITAL_STATUS', 'ID'], axis=1)
 
 
-# In[15]:
+# In[38]:
 
 
 df.columns
 
 
-# In[16]:
+# In[39]:
 
 
 df = df.rename(columns={"ID_LOAN_x": "LOAN_NUM_TOTAL", "CLOSED_FL": "LOAN_NUM_CLOSED"})
@@ -255,13 +255,13 @@ df = df.rename(columns={"ID_LOAN_x": "LOAN_NUM_TOTAL", "CLOSED_FL": "LOAN_NUM_CL
 
 # Проверим на пропуски
 
-# In[17]:
+# In[40]:
 
 
 df.isna().sum()
 
 
-# In[18]:
+# In[41]:
 
 
 df.to_csv(r'C:\Users\nikel\OneDrive\Рабочий стол\data\df.csv', index=False)
@@ -279,20 +279,20 @@ df.to_csv(r'C:\Users\nikel\OneDrive\Рабочий стол\data\df.csv', index=
 # 
 # [Пример Streamlit-приложения](https://rateyourflight.streamlit.app) с разведочным анализом, прогнозом модели и оценкой ее результатов.
 
-# In[32]:
+# In[42]:
 
 
 import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-# In[ ]:
+# In[43]:
 
 
 Распределение личного дохода
 
 
-# In[28]:
+# In[ ]:
 
 
 plt.boxplot(df['PERSONAL_INCOME'])
@@ -301,7 +301,7 @@ plt.show()
 
 # Распределение возраста
 
-# In[29]:
+# In[ ]:
 
 
 plt.boxplot(df['AGE'])
@@ -310,7 +310,7 @@ plt.show()
 
 # Матрица корреляций
 
-# In[41]:
+# In[ ]:
 
 
 plt.figure(figsize=(16, 8))
@@ -320,7 +320,7 @@ plt.show()
 
 # Зависимость целевой переменной от личного дохода
 
-# In[46]:
+# In[ ]:
 
 
 plt.bar(df['TARGET'], df['PERSONAL_INCOME'])
@@ -329,14 +329,14 @@ plt.show()
 
 # Зависимость целевой переменной от возраста
 
-# In[47]:
+# In[44]:
 
 
 plt.bar(df['TARGET'], df['AGE'])
 plt.show()
 
 
-# In[52]:
+# In[45]:
 
 
 numbers = ['AGE', 'CHILD_TOTAL', 'DEPENDANTS', 'PERSONAL_INCOME', 'LOAN_NUM_TOTAL', 'LOAN_NUM_CLOSED']
@@ -345,7 +345,7 @@ categorical = ['GENDER', 'DEPENDANTS', 'SOCSTATUS_WORK_FL', 'SOCSTATUS_PENS_FL']
 
 # Характеристики числовых столбцов
 
-# In[54]:
+# In[46]:
 
 
 df[numbers].describe()
@@ -353,7 +353,7 @@ df[numbers].describe()
 
 # Характеристики категориальных столбцов
 
-# In[58]:
+# In[47]:
 
 
 df[categorical].astype('category').describe()
